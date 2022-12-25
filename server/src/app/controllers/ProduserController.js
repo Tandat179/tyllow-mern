@@ -347,6 +347,7 @@ class ProduserController {
          return next(new ErrorHander(e, 400));
       }
    };
+   
 }
 
 module.exports = new ProduserController();

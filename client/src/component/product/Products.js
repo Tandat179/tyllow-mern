@@ -10,6 +10,8 @@ import Slider from "rc-slider";
 import "./Products.css";
 import "rc-slider/assets/index.css";
 import "./Search.css";
+import ItemListCategory from "./ItemListCategory";
+import ListCategory from "./ListCategory";
 
 const { createSliderWithTooltip } = Slider;
 
@@ -18,12 +20,12 @@ const Range = createSliderWithTooltip(Slider.Range);
 
 // Category
 const categories = [
-  "Hành Động",
+  "Hành Động",
   "Tình Cảm",
   "Hài hước",
   "Cổ Trang",
-  "Tâm Lý",
-  "Hình Sự",
+  "Tâm lí",
+  "Bí ẩn",
   "Chiến Tranh",
   "Thể Thao",
   "Võ Thuật",
@@ -109,24 +111,11 @@ function Products() {
         <div className="filterBox">
           <br></br>
           <div>CATEGORIES</div>
-          <ul className="categoryBox">
-            {categories.map((category) => (
-              <li
-                className="category-link"
-                key={category}
-                onClick={() => {
-                  if (category === "All") {
-                    setCategory("");
-                  } else {
-                    setCategory(category);
-                  }
-                  setLoading(true);
-                }}
-              >
-                {category}
-              </li>
-            ))}
-          </ul>
+
+             
+              <ListCategory setLoading={() => setLoading(true)} category={category} categories={categories} setCategory={(item) => setCategory(item)}/>
+        
+
 
           {/* Rating Star Filter */}
           <b>RATINGS ABOVE</b>
