@@ -53,7 +53,8 @@ function ProduserProvider({ children }) {
   const getOneProduser = async (id) => {
     try {
       const response = await axios.get(
-        `http://localhost:4000/produser/details/${id}`
+        // `http://localhost:4000/produser/details/${id}`
+        `http://localhost:4000/produser/${id}`
       );
 
       if (response.data.success) {
@@ -145,6 +146,7 @@ function ProduserProvider({ children }) {
     if (localStorage["auth-token"]) {
       setAuthToken(localStorage["auth-token"]);
     }
+    // let link = `http://localhost:4000/produser/admin/produsers`;
 
     let link = `http://localhost:4000/produser/admin/produsers`;
 

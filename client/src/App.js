@@ -38,6 +38,7 @@ import UpdateBanner from "./component/Admin/UpdateBanner";
 import NewProductUser from "./component/productuser/NewProductUser";
 import ProductUserList from "./component/productuser/ProductUserList";
 import ProduserUserListad from "./component/Admin/ProductUserListad";
+import UpdateProdUser from "./component/productuser/UpdateProductUser";
 
 function App() {
   const {
@@ -229,7 +230,7 @@ function App() {
 
         <Route
           extact
-          path="/productuser/create"
+          path="/produser/create"
           element={
             <ProtectedRoute user={isAuthenticated} role={user ? user.role : ""}>
               <NewProductUser />
@@ -239,7 +240,17 @@ function App() {
 
         <Route
           extact
-          path="/productuser/list"
+          path="/produser/:producerId"
+          element={
+            <ProtectedRoute user={isAuthenticated} role={user ? user.role : ""}>
+              <UpdateProdUser />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          extact
+          path="/produser/list"
           element={
             <ProtectedRoute user={isAuthenticated} role={user ? user.role : ""}>
               <ProductUserList />
@@ -266,7 +277,7 @@ function App() {
             </ProtectedRoute>
           }
         />
-ma may cai lib nay e k dung , vay cho no di ra di
+
         <Route
           extact
           path="/admin/users"

@@ -120,9 +120,16 @@ export const Header = () => {
                   )}
 
                   {user.role === "user" && (
-                    <NavDropdown.Item to="/productuser/create" as={Link}>
+                    <NavDropdown.Item to="/produser/create" as={Link}>
                       <img src={Manage} alt="cart" className="filter-green" />{" "}
                       Đối tác
+                    </NavDropdown.Item>
+                  )}
+
+                  {user.role === "user" && (
+                    <NavDropdown.Item to="/produser/list" as={Link}>
+                      <img src={Manage} alt="cart" className="filter-green" />{" "}
+                      Film của tôi  
                     </NavDropdown.Item>
                   )}
 

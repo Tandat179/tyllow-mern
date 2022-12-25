@@ -126,9 +126,13 @@ class ProduserController {
 
                req.body.images = imagesLinks;
             }
-            produser = await Produser.findByIdAndUpdate(req.params.id, req.body, {
-               new: true,
-            });
+            produser = await Produser.findByIdAndUpdate(
+               req.params.id,
+               req.body,
+               {
+                  new: true,
+               },
+            );
          } else {
             produser = await Produser.findByIdAndUpdate(
                req.params.id,
@@ -246,12 +250,14 @@ class ProduserController {
    getProduserReview = async (req, res, next) => {
       try {
          const keyword = req.params.keyword;
-         const produsers = await produser.find({
-            name: {
-               $regex: keyword,
-               $options: 'i',
-            },
-         }).lean();
+         const produsers = await produser
+            .find({
+               name: {
+                  $regex: keyword,
+                  $options: 'i',
+               },
+            })
+            .lean();
 
          let AllReviews = [];
          produsers.map(produser => {

@@ -25,17 +25,19 @@ const ProduserUserList = () => {
     setLoadingSubmit(true);
     setTimeout(() => {
       setLoadingSubmit(false);
-    }, 2000);
+    }, 100);
   };
 
   const formatterActions = (value) => {
-    return (
+    return (    
       <>
+
         <Link to={`/produser/${value}`}>
           <img src={EditIcon} alt="icon" />
         </Link>
         <button onClick={() => deleteProduserHandler(value)}>
           <img src={DeleteIcon} alt="icon" />
+       
         </button>
       </>
     );
@@ -57,28 +59,25 @@ const ProduserUserList = () => {
 
   const columns = [
     { key: "stt", name: "STT", minWidth: 120, flex: 0.1 },
-    {
-      key: "name",
-      name: "Name",
+    { key: "id", name: "Product ID", minWidth: 300, flex: 1 },
 
-      // formatter: (name, image) => {
-      //   return formatterName(name.row.name);
-      // },
-    },
+    // {
+    //   key: "name",
+    //   name: "Name",
+
+    //   // formatter: (name, image) => {
+    //   //   return formatterName(name.row.name);
+    //   // },
+    // },
 
     {
       key: "category",
       name: "Category",
     },
-
     {
-      key: "stock",
-      name: "Stock",
-      type: "number",
-      minWidth: 200,
-      flex: 0.5,
+      key: "bannerId",
+      name: "bannerId",
     },
-    //
 
 
     {
@@ -114,8 +113,8 @@ const ProduserUserList = () => {
       rows.push({
         stt: STT,
     
-        bannerId: banner._id,
-        category: banner.category,
+        id: banner._id,
+        category: banner.category,  
         stock: banner.stock,
         // name: { name: banner.name, images: banner.images },
         content: banner.content,
@@ -130,7 +129,7 @@ const ProduserUserList = () => {
     const timer = setTimeout(async () => {
       await getAllProdusers();
       setLoading(false);
-    }, 1000);
+    }, 100);
     return () => clearTimeout(timer);
   }, []);
 

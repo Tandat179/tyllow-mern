@@ -58,6 +58,13 @@ router.get(
    ProduserController.getAllProdusersAdmin,
 );
 
+router.get(
+   '/admin/produsers',
+   isAuthenticatedUser,
+   // authorizeRole('admin'),
+   ProduserController.getAllProdusersAdmin,
+);
+
 // Get SomeOne Produser Review
 router.get(
    '/admin/review/:keyword',

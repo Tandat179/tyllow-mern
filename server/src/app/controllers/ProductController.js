@@ -2,7 +2,7 @@ const Product = require('../model/Product');
 const ErrorHander = require('../../utils/errorhander');
 const ApiFeatures = require('../../utils/apiFeatures');
 const cloundinary = require('cloudinary');
-
+// ok roi day a, qua may a xem cho da~ xem windowwko quen oke a
 class ProductController {
    // Create Producer
    createProduct = async (req, res, next) => {

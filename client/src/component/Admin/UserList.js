@@ -13,6 +13,7 @@ import LoadingModel from "../Loading/loading";
 const UserList = () => {
   const [isLoading, setLoading] = useState(true);
   const [loadingSubmit, setLoadingSubmit] = useState(false);
+  
   const {
     userState: { usersAdmin },
     getAllUsers,
