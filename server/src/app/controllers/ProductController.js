@@ -2,6 +2,8 @@ const Product = require('../model/Product');
 const ErrorHander = require('../../utils/errorhander');
 const ApiFeatures = require('../../utils/apiFeatures');
 const cloundinary = require('cloudinary');
+const removeVietnameseTones = require('../../constant/RemoveVietnam');
+
 
 const removeVietnameseTones = require('../../constant/RemoveVietnam');
 
