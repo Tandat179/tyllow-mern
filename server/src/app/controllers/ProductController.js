@@ -2,7 +2,10 @@ const Product = require('../model/Product');
 const ErrorHander = require('../../utils/errorhander');
 const ApiFeatures = require('../../utils/apiFeatures');
 const cloundinary = require('cloudinary');
-// ok roi day a, qua may a xem cho da~ xem windowwko quen oke a
+
+const removeVietnameseTones = require('../../constant/RemoveVietnam');
+
+
 class ProductController {
    // Create Producer
    createProduct = async (req, res, next) => {
@@ -43,6 +46,7 @@ class ProductController {
    getAllProduct = async (req, res, next) => {
       try {
          const resultPerPage = 16;
+         console.log(req.query,"req");
          const productCount = await Product.countDocuments();
          const apiFeaturesFilter = new ApiFeatures(Product.find(), req.query)
             .searchByName()
@@ -347,6 +351,27 @@ class ProductController {
          return next(new ErrorHander(e, 400));
       }
    };
-}
+   test = async (req, res, next) => {
+      try {
+         const { name } = req.query;
+   
+         const item = await Product.findOne({name})
+        
+         const {category} = item
+         const newCategory = removeVietnameseTones(category);
+         item.category = newCategory
+         console.log(newCategory);
+         // let doc = await Product.findOneAndUpdate({name}, item);
 
+         
+         res.json({
+            success: true,
+            item,
+            message: 'Delete complete',
+         });
+      } catch (e) {
+         return next(new ErrorHander(e, 400));
+      }
+   };
+}
 module.exports = new ProductController();

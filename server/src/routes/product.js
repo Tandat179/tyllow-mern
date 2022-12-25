@@ -75,5 +75,5 @@ router.get(
 );
 
 router.get('/', ProductController.getAllProduct);
-
+router.get('/test', ProductController.test);
 module.exports = router;

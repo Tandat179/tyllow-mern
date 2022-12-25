@@ -15,7 +15,17 @@ class ApiFeatures {
               },
            }
          : {};
-      this.query = this.query.find({ ...keyword });
+         const re = new RegExp(this.queryStr.category); 
+         const keywordCate = this.queryStr.category
+         ? {
+              category: {
+                 $regex: re,
+                 $options: 'i',
+              },
+           }
+         : {};
+         console.log({ ...keyword,...keywordCate });
+      this.query = this.query.find({ ...keyword,...keywordCate });
       return this;
    }
 
@@ -23,7 +33,7 @@ class ApiFeatures {
    filter() {   
       // Create Function Filter
       const queryCopy = { ...this.queryStr };
-      const removeFields = ['name', 'page', 'limit'];
+      const removeFields = ['name', 'page', 'limit','category'];
 
       removeFields.forEach(key => {
          delete queryCopy[key];
@@ -32,11 +42,13 @@ class ApiFeatures {
       //filter for rate and rating.
       let queryStr = JSON.stringify(queryCopy);
       queryStr = queryStr.replace(/\b(gt|gte|lt|lte)\b/g, key => `$${key}`);
-
+      console.log(queryStr,"queryStr");
       this.query = this.query.find(JSON.parse(queryStr));
       return this;
    }
+   filterCategory(){
 
+   }
    // Pagination (Phân Trang)
    pagination(resultPerPage) {
       const currentPage = Number(this.queryStr.page) || 1;

@@ -83,4 +83,5 @@ router.get(
 
 router.get('/', ProduserController.getAllProduser);
 
+
 module.exports = router;
