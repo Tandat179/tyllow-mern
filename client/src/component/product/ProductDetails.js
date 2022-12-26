@@ -188,6 +188,7 @@ const ProductDetails = () => {
             border="red"
             width="100%"
             height="515"
+            allowFullScreen="true"
             src={product.link_embed}
             title="YouTube video player"
             allow="accelerometer; autoplay; 

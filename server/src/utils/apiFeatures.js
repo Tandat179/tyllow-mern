@@ -46,9 +46,7 @@ class ApiFeatures {
       this.query = this.query.find(JSON.parse(queryStr));
       return this;
    }
-   filterCategory(){
 
-   }
    // Pagination (Phân Trang)
    pagination(resultPerPage) {
       const currentPage = Number(this.queryStr.page) || 1;

@@ -39,6 +39,14 @@ import NewProductUser from "./component/productuser/NewProductUser";
 import ProductUserList from "./component/productuser/ProductUserList";
 import ProduserUserListad from "./component/Admin/ProductUserListad";
 import UpdateProdUser from "./component/productuser/UpdateProductUser";
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query'
+const queryClient = new QueryClient()
 
 function App() {
   const {
@@ -57,6 +65,7 @@ function App() {
   }, []);
 
   return (
+    <QueryClientProvider client={queryClient}>
     <Router>
       <Header></Header>
       <Routes>
@@ -332,6 +341,7 @@ function App() {
       </Routes>
       {/* <Footer></Footer> */}
     </Router>
+    </QueryClientProvider>
   );
 }
 

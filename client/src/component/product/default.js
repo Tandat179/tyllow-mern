@@ -10,6 +10,7 @@ import { CartContext } from "../../context/cart/CartContext";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { AuthContext } from "../../context/auth/AuthContext";
+import { v4 } from "uuid";
 
 const ProductDetails = () => {
   const navigate = useNavigate();
@@ -111,7 +112,7 @@ const ProductDetails = () => {
             {/*  Carousel  */}
             <Carousel variant="dark" controls={false}>
               {product.images.map((item) => (
-                <Carousel.Item>
+                <Carousel.Item key={v4()}>
                   <img alt="img" src={item.url} className="CarouselImage" />
                 </Carousel.Item>
               ))}

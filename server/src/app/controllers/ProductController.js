@@ -5,7 +5,6 @@ const cloundinary = require('cloudinary');
 const removeVietnameseTones = require('../../constant/RemoveVietnam');
 
 
-const removeVietnameseTones = require('../../constant/RemoveVietnam');
 
 
 class ProductController {
@@ -362,13 +361,55 @@ class ProductController {
          const {category} = item
          const newCategory = removeVietnameseTones(category);
          item.category = newCategory
-         console.log(newCategory);
-         // let doc = await Product.findOneAndUpdate({name}, item);
+     
+         let doc = await Product.findOneAndUpdate({name}, item);
 
          
          res.json({
             success: true,
             item,
+            message: 'Delete complete',
+         });
+      } catch (e) {
+         return next(new ErrorHander(e, 400));
+      }
+   };
+   getproductByCategory = async (req, res, next) => {
+      try {
+         const { category } = req.query;
+        const products = await Product.find({category : {$regex : category , $options :'i'}})
+        
+         
+         res.json({
+            success: true,
+            products,
+            message: 'Delete complete',
+         });
+      } catch (e) {
+         return next(new ErrorHander(e, 400));
+      }
+   };
+   filterProduct = async (req, res, next) => {
+      try {
+         const keyword = req.query;
+         console.log(keyword,'keyword');
+         // const { category } = req.query;
+         let products
+         if(req.query.category){
+
+             products = await Product.find({category : {$regex : req.query.category , $options :'i'}})
+         }
+         else{
+            
+             products = await Product.find(keyword)
+
+         }
+         
+        
+         
+         res.json({
+            success: true,
+            products,
             message: 'Delete complete',
          });
       } catch (e) {

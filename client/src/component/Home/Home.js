@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import { OutlineButton } from "../../component/button/Button";
 import { Banner } from "../banner/Banner.js";
 import "../../component/banner/banner.scss";
+import Category from "./Category";
 
 // import HeroSlide from "../hero-slide/HeroSlide";
 function Home() {
@@ -19,14 +20,8 @@ function Home() {
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(async () => {
-      await getProducts();
-      setLoading(false);
-    }, 1000);
-    return () => clearTimeout(timer);
+       getProducts().then(res =>  setLoading(false));
   }, []);
-
-  // console.log(products);
 
   return (
     <Fragment>
@@ -47,20 +42,8 @@ function Home() {
       <br></br>
 
       <div className="container" id="container">
-        <div className="section__header mb2">
-          <h1>Hello</h1>
-          <div className="section__header mb2">
-            <Link to="/products">
-              <OutlineButton className="small">View more</OutlineButton>
-            </Link>
-          </div>
-          <br></br>
-
-          <ListMovie />
-
-          <div className="section__header mb2"></div>
-          <br></br>
-        </div>
+      <Category title="phim 2022" filter={{filter : 'year' , value : 2022}}/>
+      <Category title="Hành động" filter={{filter : 'category' , value : "Hanh Dong"}}/>
       </div>
     </Fragment>
   );

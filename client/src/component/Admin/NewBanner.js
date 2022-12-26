@@ -245,8 +245,8 @@ const NewBanner = () => {
 
               <select onChange={handleOnChangeCreate} name="country">
                 <option value="">Choose Country</option>
-                {COUNTRY.map((coun) => (
-                  <option key={coun} value={coun}>
+                {COUNTRY.map((coun,i) => (
+                  <option key={i} value={coun}>
                     {coun}
                   </option>
                 ))}

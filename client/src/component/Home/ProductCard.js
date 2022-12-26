@@ -14,7 +14,7 @@ const ProductCard = ({ product }) => {
     edit: false,
     size: 18,
   };
-  console.log(product.ispremium);
+  // console.log(product.ispremium);
   return (
     <>
       <Link className="productCard" to={`/product/${product._id}`}>
