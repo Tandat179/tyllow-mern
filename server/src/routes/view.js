@@ -32,6 +32,13 @@ router.post('/increaseView/:id',async(req,res)=>{
 
 }
 
+
+)
+router.get('/filterCustome',async(req,res)=>{
+   
+    const products = await View.find({}).sort({CountView : -1}).populate('product') // sắp xếp view giảm dần
+    res.status(200).json({products})
+}
 )
 
 

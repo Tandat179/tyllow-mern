@@ -19,12 +19,7 @@ export function Banner({}) {
   const [movieItems, setMovieItems] = useState([]);
 
   useEffect(() => {
-    const timer = setTimeout(async () => {
-      await getBanners();
-
-      setLoading(false);
-    }, 1000);
-    return () => clearTimeout(timer);
+       getBanners().then(res => setLoading(false));
   }, []);
 
   // useEffect(() => {

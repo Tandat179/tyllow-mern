@@ -7,7 +7,7 @@ const ViewSchema = new mongoose.Schema({
          type: Number,
       
       required: true,
-      default : 0
+      default : 1
       },
    product: {
       type: mongoose.Schema.ObjectId,

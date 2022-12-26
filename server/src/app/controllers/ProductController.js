@@ -3,6 +3,7 @@ const ErrorHander = require('../../utils/errorhander');
 const ApiFeatures = require('../../utils/apiFeatures');
 const cloundinary = require('cloudinary');
 const removeVietnameseTones = require('../../constant/RemoveVietnam');
+const View = require('../model/View');
 
 
 
@@ -404,9 +405,6 @@ class ProductController {
              products = await Product.find(keyword)
 
          }
-         
-        
-         
          res.json({
             success: true,
             products,
@@ -416,5 +414,6 @@ class ProductController {
          return next(new ErrorHander(e, 400));
       }
    };
+
 }
 module.exports = new ProductController();

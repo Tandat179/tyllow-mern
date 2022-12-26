@@ -2,9 +2,10 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 import { OutlineButton } from '../button/Button';
 import ListMovie from '../movie-list/ListMovie';
+import ListMovieCustom from '../movie-list/ListMovieCustom';
 import "./home.css";
 
-export default function Category({title,filter}) {
+export default function Category({title,filter,filterCustom}) {
   return (
     <div className="section__header mb2">
     <h1>{title}</h1>
@@ -14,7 +15,8 @@ export default function Category({title,filter}) {
       </Link>
     </div>
     <br></br>
-   <ListMovie filter={filter}/>
+    {filter && <ListMovie filter={filter}/>}
+   {filterCustom && <ListMovieCustom filterCustom={filterCustom}/>}
    
 
     <div className="section__header mb2"></div>

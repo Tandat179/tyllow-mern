@@ -42,7 +42,9 @@ function Home() {
       <br></br>
 
       <div className="container" id="container">
+      <Category title="phim Hot" filterCustom={{filterCustom : 'CountView' , value : -1}}/>
       <Category title="phim 2022" filter={{filter : 'year' , value : 2022}}/>
+      <Category title="phim Premium" filter={{filter : 'ispremium' , value : true}}/>
       <Category title="Hành động" filter={{filter : 'category' , value : "Hanh Dong"}}/>
       </div>
     </Fragment>

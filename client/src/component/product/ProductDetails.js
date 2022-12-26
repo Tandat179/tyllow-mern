@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useCallback } from "react";
 import Carousel from "react-bootstrap/Carousel";
 import { useParams, useNavigate } from "react-router-dom";
 import LoadingModal from "../Loading/loading";
@@ -12,6 +12,7 @@ import Modal from "react-bootstrap/Modal";
 import { AuthContext } from "../../context/auth/AuthContext";
 import "./product-detail.scss";
 import Button from "../button/Button";
+import axiosClient from "../../api/axiosClient";
 const ProductDetails = () => {
   const navigate = useNavigate();
   const { addItemsToCart } = useContext(CartContext);
@@ -33,6 +34,9 @@ const ProductDetails = () => {
   } = useContext(AuthContext);
 
   let body;
+  const fetchIncreaseView = useCallback(async() => {
+    const res = await  axiosClient.post(`/view/increaseView/${id}`)
+    },[id])
 
   // Quantity of Stock
   const increaseQuantity = () => {
@@ -89,11 +93,11 @@ const ProductDetails = () => {
 
   // Await get Someone Item or Product
   useEffect(() => {
-    const timer = setTimeout(async () => {
-      await getOneProduct(id);
-      setLoading(false);
-    }, 1500);
-    return () => clearTimeout(timer);
+    // const timer = setTimeout(async () => {
+       getOneProduct(id).then(res =>  setLoading(false));
+       fetchIncreaseView()
+    // }, 1500);
+    // return () => clearTimeout(timer);
   }, [id]);
 
   if (isLoading) {
@@ -188,7 +192,7 @@ const ProductDetails = () => {
             border="red"
             width="100%"
             height="515"
-            allowFullScreen="true"
+            allowFullScreen={true}
             src={product.link_embed}
             title="YouTube video player"
             allow="accelerometer; autoplay; 
