@@ -10,9 +10,13 @@ import { OutlineButton } from "../../component/button/Button";
 import { Banner } from "../banner/Banner.js";
 import "../../component/banner/banner.scss";
 import Category from "./Category";
+import { useDispatch } from "react-redux";
+import { removeQueryFetch } from "../../redux/pageStore";
+import CategoryCate from "./CategoryCate";
 
 // import HeroSlide from "../hero-slide/HeroSlide";
 function Home() {
+  const dispatch = useDispatch()
   const {
     productState: { products },
     getProducts,
@@ -21,6 +25,7 @@ function Home() {
 
   useEffect(() => {
        getProducts().then(res =>  setLoading(false));
+       dispatch(removeQueryFetch())
   }, []);
 
   return (
@@ -42,10 +47,10 @@ function Home() {
       <br></br>
 
       <div className="container" id="container">
-      <Category title="phim Hot" filterCustom={{filterCustom : 'CountView' , value : -1}}/>
+      <Category title="phim Hot" isHot={true} filterCustom={{filterCustom : 'CountView' , value : -1}}/>
       <Category title="phim 2022" filter={{filter : 'year' , value : 2022}}/>
       <Category title="phim Premium" filter={{filter : 'ispremium' , value : true}}/>
-      <Category title="Hành động" filter={{filter : 'category' , value : "Hanh Dong"}}/>
+      <CategoryCate title="Hành động" filter={{filter : 'category' , value : "Hanh Dong"}}/>
       </div>
     </Fragment>
   );

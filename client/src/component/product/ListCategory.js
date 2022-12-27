@@ -1,12 +1,16 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ItemListCategory from './ItemListCategory';
 import "./Products.css";
 import {v4} from 'uuid'
- function ListCategory({categories,setCategory}) {
-  return (
+import { newCategorys } from '../../consts/category';
+import { useSelector } from 'react-redux';
+ function ListCategory({setCategory}) {
+const [listActive,setListActive] = useState([])
+const category = useSelector(state => state.PageStore.category)
+    return (
     <ul className="categoryBox">
-            {categories.map((cate) => (
-              <ItemListCategory key={v4()} setCategory={() => setCategory(cate)} cate={cate.label}/>
+            {newCategorys.map((cate,i) => (
+              <ItemListCategory key={v4()} isActive={listActive.some(e => e===i) || category === cate.value} disableActive={() => setListActive(listActive.filter(e => e !== i))}  setListActive = {() => setListActive([...listActive,i])} setCategory={() => setCategory(cate)} cate={cate}/>
             ))}
           </ul>
   )

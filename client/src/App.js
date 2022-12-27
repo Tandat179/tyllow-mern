@@ -46,6 +46,8 @@ import {
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query'
+import ProductsSpecial from "./component/product/ProductsSpecial";
+import ProductsV2 from "./component/product/ProductsV2";
 const queryClient = new QueryClient()
 
 function App() {
@@ -70,7 +72,8 @@ function App() {
       <Header></Header>
       <Routes>
         <Route extact path="/product/:id" element={<ProductDetails />} />
-        <Route extact path="/products" element={<Products />} />
+        <Route extact path="/products" element={<ProductsV2 />} />
+        <Route extact path="/productsSpecial" element={<ProductsSpecial />} />
         <Route extact path="/login" element={<Auth />} />
         <Route extact path="/cart" element={<Cart />} />
         <Route extact path="/password/forgot" element={<ForgotPassword />} />

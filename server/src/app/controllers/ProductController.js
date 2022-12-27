@@ -47,7 +47,8 @@ class ProductController {
    // Get All Product
    getAllProduct = async (req, res, next) => {
       try {
-         const resultPerPage = 16;
+         const resultPerPage = req.query.limit;
+         
          console.log(req.query,"req");
          const productCount = await Product.countDocuments();
          const apiFeaturesFilter = new ApiFeatures(Product.find(), req.query)

@@ -13,6 +13,9 @@ import { AuthContext } from "../../context/auth/AuthContext";
 import "./product-detail.scss";
 import Button from "../button/Button";
 import axiosClient from "../../api/axiosClient";
+import CategoryDetails from "../Home/CategoryDetails";
+
+import ListButtonContact from "./ListButtonContact";
 const ProductDetails = () => {
   const navigate = useNavigate();
   const { addItemsToCart } = useContext(CartContext);
@@ -32,12 +35,12 @@ const ProductDetails = () => {
   const {
     authState: { isAuthenticated },
   } = useContext(AuthContext);
-
+  
   let body;
   const fetchIncreaseView = useCallback(async() => {
     const res = await  axiosClient.post(`/view/increaseView/${id}`)
     },[id])
-
+  
   // Quantity of Stock
   const increaseQuantity = () => {
     if (product.Stock <= quantity) return;
@@ -98,8 +101,13 @@ const ProductDetails = () => {
        fetchIncreaseView()
     // }, 1500);
     // return () => clearTimeout(timer);
-  }, [id]);
 
+  }, [id]);
+  const getCategoryToFetch = (category) => {
+    const newCategory = category.replaceAll(" ","|")
+    return newCategory
+  }
+  getCategoryToFetch("hanh dong tam ly")
   if (isLoading) {
     body = <>{isLoading && <LoadingModal show={isLoading} />}</>;
   } else {
@@ -200,6 +208,7 @@ const ProductDetails = () => {
           gyroscope; picture-in-picture"
           ></iframe>
         </div>
+        <ListButtonContact id={id}/>
         <h3 className="reviewsHeading">REVIEWS</h3>
         <Modal
           aria-labelledby="simple-dialog-title"
@@ -245,6 +254,9 @@ const ProductDetails = () => {
         ) : (
           <p className="noReviews">No Reviews Yet</p>
         )}
+       {/* <ListContact /> */}
+     
+        <CategoryDetails filter={{filter : "category" , value : getCategoryToFetch(product.category)}}/>
         {/* <div className="ProductDetails">
           <div>
           

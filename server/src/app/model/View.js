@@ -9,6 +9,11 @@ const ViewSchema = new mongoose.Schema({
       required: true,
       default : 1
       },
+   CountLike : {
+      type : Number,
+      required : true,
+      default : 0
+   },
    product: {
       type: mongoose.Schema.ObjectId,
       ref: 'products',

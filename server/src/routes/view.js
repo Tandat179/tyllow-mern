@@ -15,6 +15,12 @@ router.post('/add',async(req,res)=>{
 }
 
 )
+router.post('/addField',async(req,res)=>{
+    
+   const news =await View.updateMany({},{"$set": {"CountLike": "1"}})
+   res.status(202).json(news)
+}
+)
 // Increase View
 router.post('/increaseView/:id',async(req,res)=>{
     const {id} = req.params;
@@ -31,12 +37,41 @@ router.post('/increaseView/:id',async(req,res)=>{
     }
 
 }
+)
+router.post('/increaseLike/:id',async(req,res)=>{
+    const {id} = req.params;
+    const product = await View.findOne({product : id})
+    if(product){
+        const Views = await View.findOneAndUpdate({product :id},{CountLike: product.CountLike+1});
+       res.status(200).json(Views);
 
+    }
+    else{
+       
+        res.status(400).json("Not Find out product");
+    }
 
+}
+)
+router.get('/fetchLike/:id',async(req,res)=>{
+    const {id} = req.params;
+    const product = await View.findOne({product : id})
+    console.log("product",product);
+    if(product){
+       
+       res.status(200).json(product);
+
+    }
+    else{
+       
+        res.status(400).json("Not Find out product");
+    }
+
+}
 )
 router.get('/filterCustome',async(req,res)=>{
-   
-    const products = await View.find({}).sort({CountView : -1}).populate('product') // sắp xếp view giảm dần
+//    const limit = 20;
+    const products = await View.find({}).sort({CountView : -1}).populate('product').limit(20) // sắp xếp view giảm dần
     res.status(200).json({products})
 }
 )
