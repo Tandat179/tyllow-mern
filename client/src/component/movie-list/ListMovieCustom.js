@@ -15,7 +15,6 @@ function ListMovieCustom({filterCustome}) {
     return res.data
   }
   const {data,isLoading} = useQuery([filterCustome],fetchListMoviceFilter)
-  console.log(data);
 
   return (
     <Splide

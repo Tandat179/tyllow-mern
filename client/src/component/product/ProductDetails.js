@@ -31,16 +31,17 @@ const ProductDetails = () => {
     getOneProduct,
     createNewReviews,
   } = useContext(ProductContext);
-
+console.log(product);
   const {
     authState: { isAuthenticated },
   } = useContext(AuthContext);
-  
   let body;
   const fetchIncreaseView = useCallback(async() => {
     const res = await  axiosClient.post(`/view/increaseView/${id}`)
     },[id])
-  
+  const ReviewReverse = () => { // Đảo ngược Reivew
+    return product.reviews.sort(() => -1)
+  }
   // Quantity of Stock
   const increaseQuantity = () => {
     if (product.Stock <= quantity) return;
@@ -244,10 +245,10 @@ const ProductDetails = () => {
             </Button>
           </Modal.Footer>
         </Modal>
-        {product.reviews && product.reviews[0] ? (
+        {ReviewReverse() && ReviewReverse()[0] ? (
           <div className="reviews">
-            {product.reviews &&
-              product.reviews.map((review) => (
+            {ReviewReverse() &&
+              ReviewReverse().map((review) => (
                 <ReviewCard key={review._id} review={review} />
               ))}
           </div>

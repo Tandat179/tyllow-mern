@@ -40,10 +40,26 @@ router.post('/increaseView/:id',async(req,res)=>{
 )
 router.post('/increaseLike/:id',async(req,res)=>{
     const {id} = req.params;
+    const {status} = req.query;
     const product = await View.findOne({product : id})
+    console.log(status);
     if(product){
-        const Views = await View.findOneAndUpdate({product :id},{CountLike: product.CountLike+1});
-       res.status(200).json(Views);
+        if(status === 'giam'){
+            if(product.CountLike !== 0)
+            {
+
+                const Views = await View.findOneAndUpdate({product :id},{CountLike: product.CountLike-1});
+                res.status(200).json(Views);
+            }
+            else {
+                res.status(400).json("0 like roi");
+            }
+        }
+        else{
+
+            const Views = await View.findOneAndUpdate({product :id},{CountLike: product.CountLike+1});
+            res.status(200).json(Views);
+        }
 
     }
     else{

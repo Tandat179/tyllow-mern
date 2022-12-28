@@ -40,8 +40,8 @@ export function Banner({}) {
   const renderItem = () => {
     return banners.map((values, index) => {
       return (
-        <>
-          <SplideSlide className="hero-slide">
+        
+          <SplideSlide key={index} className="hero-slide">
             {/* <Link to={`/banner/${values._id}`}> */}
             <div
               className={`hero-slide__item active  `}
@@ -61,7 +61,7 @@ export function Banner({}) {
             </div>
             {/* </Link> */}
           </SplideSlide>
-        </>
+        
       );
     });
   };
