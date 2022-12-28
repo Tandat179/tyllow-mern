@@ -70,6 +70,10 @@ const ProduserUserListad = () => {
       key: "category",
       name: "Category",
     },
+    {
+      key: "approve",
+      name: "Approve",
+    },
 
     {
       key: "content",
@@ -92,7 +96,7 @@ const ProduserUserListad = () => {
       type: "number",
       sortable: false,
       formatter: (value) => {
-        return formatterActions(value.row.id);
+        return formatterActions(value.row.produserId);
       },
     },
   ];
@@ -100,20 +104,21 @@ const ProduserUserListad = () => {
   const rows = [];
   let STT = 1;
   produsersAdmin &&
-    produsersAdmin.forEach((banner, index) => {
+    produsersAdmin.forEach((produser, index) => {
       rows.push({
         stt: STT,
 
-        bannerId: banner._id,
-        category: banner.category,
+        produserId: produser._id,
+        category: produser.category,
+        approve: String(produser.approve),
 
-        // name: { name: banner.name, images: banner.images },
-        content: banner.content,
-        ispremium: String(banner.ispremium),
-        link_embed: banner.link_embed,
+        // name: { name: produser.name, images: produser.images },
+        content: produser.content,
+        ispremium: String(produser.ispremium),
+        link_embed: produser.link_embed,
       });
       STT++;
-      // console.log(banner.ispremium);
+      // console.log(produser.ispremium);
     });
 
   useEffect(() => {
@@ -134,12 +139,12 @@ const ProduserUserListad = () => {
       <div className="dashboardProduct">
         <Sidebar />
         <div className="productListContainer">
-          {/* <h1 id="bannerListHeading">ALL FILM </h1> */}
+          {/* <h1 id="produserListHeading">ALL FILM </h1> */}
           <form className="searchBox">
             <input
               type="text"
               name="keyword"
-              placeholder="Search a Banner ..."
+              placeholder="Search a Produser ..."
               onChange={(e) => setKeyword(e.target.value)}
             />
           </form>

@@ -6,7 +6,7 @@ import { ProduserContext } from "../../context/produser/ProduserContext";
 import EditIcon from "../../assets/pencil-fill.svg";
 import DeleteIcon from "../../assets/trash-fill.svg";
 import LoadingModel from "../Loading/loading";
-import Sidebar from '../../component/Admin/SideBar'
+import Sidebar from "../../component/Admin/SideBar";
 
 // import Sidebar from "./SideBar.js";
 import "./ProductList.css";
@@ -29,15 +29,13 @@ const ProduserUserList = () => {
   };
 
   const formatterActions = (value) => {
-    return (    
+    return (
       <>
-
         <Link to={`/produser/${value}`}>
           <img src={EditIcon} alt="icon" />
         </Link>
         <button onClick={() => deleteProduserHandler(value)}>
           <img src={DeleteIcon} alt="icon" />
-       
         </button>
       </>
     );
@@ -59,7 +57,6 @@ const ProduserUserList = () => {
 
   const columns = [
     { key: "stt", name: "STT", minWidth: 120, flex: 0.1 },
-    { key: "id", name: "Product ID", minWidth: 300, flex: 1 },
 
     // {
     //   key: "name",
@@ -75,10 +72,9 @@ const ProduserUserList = () => {
       name: "Category",
     },
     {
-      key: "bannerId",
-      name: "bannerId",
+      key: "produserId",
+      name: "produserId",
     },
-
 
     {
       key: "content",
@@ -109,20 +105,20 @@ const ProduserUserList = () => {
   const rows = [];
   let STT = 1;
   produsersAdmin &&
-  produsersAdmin.forEach((banner, index) => {
+    produsersAdmin.forEach((prouser, index) => {
       rows.push({
         stt: STT,
-    
-        id: banner._id,
-        category: banner.category,  
-        stock: banner.stock,
-        // name: { name: banner.name, images: banner.images },
-        content: banner.content,
-        ispremium: String(banner.ispremium),
-        link_embed: banner.link_embed,
+
+        produserId: prouser._id,
+        category: prouser.category,
+        stock: prouser.stock,
+        // name: { name: prouser.name, images: prouser.images },
+        content: prouser.content,
+        ispremium: String(prouser.ispremium),
+        link_embed: prouser.link_embed,
       });
       STT++;
-      // console.log(banner.ispremium);
+      // console.log(prouser.ispremium);
     });
 
   useEffect(() => {
@@ -141,15 +137,14 @@ const ProduserUserList = () => {
     <Fragment>
       <LoadingModel show={isLoading || loadingSubmit} />
       <div className="dashboardProduct">
-            <Sidebar/>
+        <Sidebar />
         <div className="productListContainer">
-          {/* <h1 id="bannerListHeading">ALL FILM </h1> */}
+          <h1 id="productListHeading">ALL FILM </h1>
           <form className="searchBox">
-   
             <input
               type="text"
               name="keyword"
-              placeholder="Search a Banner ..."
+              placeholder="Search a Prouser ..."
               onChange={(e) => setKeyword(e.target.value)}
             />
           </form>

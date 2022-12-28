@@ -13,11 +13,11 @@ import { COUNTRY } from "../../consts/country";
 
 import SideBar from "../Admin/SideBar";
 
-const UpdateProduser = () => {
+const UpdateProduserad = () => {
   const {
     produserState: { produser },
     getOneProduser,
-    updateProduser,
+    updateProduserad,
   } = useContext(ProduserContext);
   const navigate = useNavigate();
   const [oldImages, setOldImages] = useState([]);
@@ -45,6 +45,7 @@ const UpdateProduser = () => {
     country: produser.country || "",
     actor: produser.actor || " ",
     director: produser.director || " ",
+    approve: produser.approve || " ",
   });
   const handleOnChangeUpdate = (e) =>
     setFormUpdate({ ...formUpdate, [e.target.name]: e.target.value });
@@ -77,6 +78,7 @@ const UpdateProduser = () => {
       country: produser.country || "",
       actor: produser.actor || " ",
       director: produser.director || " ",
+      approve: produser.approve || " ",
     });
     setOldImages(produser.images || []);
   }, [getOneProduser]);
@@ -90,8 +92,8 @@ const UpdateProduser = () => {
   const updateProduserSubmitHandler = (e) => {
     e.preventDefault();
     loadingShow();
-    updateProduser(formUpdate, produserId);
-    navigate("/produser/list", { replace: true });
+    updateProduserad(formUpdate, produserId);
+    navigate("/admin/produser/list", { replace: true });
   };
 
   const updateProduserImagesChange = (e) => {
@@ -225,6 +227,18 @@ const UpdateProduser = () => {
               >
                 <option value="Vietsubs ">VietSubs</option>
                 <option value="Thuyết Minh">Thuyết Minh</option>
+              </select>
+            </div>
+
+            <div>
+              <img src={SpellcheckIcon} alt="s" className="svgImg" />
+              <select
+                name="approve"
+                value={formUpdate.approve || ""}
+                onChange={handleOnChangeUpdate}
+              >
+                <option value="1">Approve</option>
+                <option value="0">Not Reached</option>
               </select>
             </div>
 
@@ -376,4 +390,4 @@ const UpdateProduser = () => {
   );
 };
 
-export default UpdateProduser;
+export default UpdateProduserad;

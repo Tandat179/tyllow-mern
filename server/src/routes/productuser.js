@@ -51,20 +51,25 @@ router.put(
 // router.get('/reviews', ProduserController.getProduserReview);
 
 // Get All Produser of Admin
+// router.get(
+//    '/admin/produsers',
+//    isAuthenticatedUser,
+//    // authorizeRole('admin'),
+//    ProduserController.getAllProdusersAdmin,
+// );
+
+router.get(
+   '/produsers',
+   isAuthenticatedUser,
+   // authorizeRole('admin'),
+   ProduserController.getAllProdusersAdmin,
+);
 router.get(
    '/admin/produsers',
    isAuthenticatedUser,
    // authorizeRole('admin'),
    ProduserController.getAllProdusersAdmin,
 );
-
-router.get(
-   '/admin/produsers',
-   isAuthenticatedUser,
-   // authorizeRole('admin'),
-   ProduserController.getAllProdusersAdmin,
-);
-
 // Get SomeOne Produser Review
 router.get(
    '/admin/review/:keyword',
@@ -82,6 +87,5 @@ router.get(
 );
 
 router.get('/', ProduserController.getAllProduser);
-
 
 module.exports = router;

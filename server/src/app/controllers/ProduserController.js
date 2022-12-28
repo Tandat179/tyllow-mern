@@ -166,6 +166,92 @@ class ProduserController {
       }
    };
 
+
+   updateProduserad = async (req, res, next) => {
+      let images = [];
+
+      try {
+         // produser Search
+         let produser = await Produser.findById(req.params.id);
+
+         if (!produser) {
+            return next(new ErrorHander('Produser not found', 404));
+         }
+
+         // Update Image
+         if (req.body.isUpdateImages) {
+            if (typeof req.body.images === 'String') {
+               images.push(req.body, images);
+            } else {
+               images = req.body.images;
+            }
+            // Image With Folder
+            for (let i = 0; i < produser.images.length; i++) {
+               await cloundinary.v2.uploader.destroy(
+                  produser.images[i].public_id,
+               );
+            }
+
+            // Image With Link
+            const imagesLinks = [];
+
+            for (let i = 0; i < images.length; i++) {
+               const result = await cloundinary.v2.uploader.upload(images[i], {
+                  folder: 'produsers',
+               });
+
+               imagesLinks.push({
+                  public_id: result.public_id,
+                  url: result.secure_url,
+               });
+
+               req.body.images = imagesLinks;
+            }
+            produser = await Produser.findByIdAndUpdate(
+               req.params.id,
+               req.body,
+               {
+                  new: true,
+               },
+            );
+         } else {
+            produser = await Produser.findByIdAndUpdate(
+               req.params.id,
+               {
+                  name: req.body.name,
+                  price: req.body.price,
+                  urlfilm: req.body.urlfilm,
+                  content: req.body.content,
+                  category: req.body.category,
+                  approve: req.body.approve,
+
+                  // stock: req.body.stock,
+                  images: req.body.images,
+                  ispremium: req.body.ispremium,
+                  link_embed: req.body.link_embed,
+                  time: req.body.time,
+                  quality: req.body.quality,
+                  lang: req.body.lang,
+                  year: req.body.year,
+                  country: req.body.country,
+                  actor: req.body.actor,
+                  director: req.body.director,
+               },
+               {
+                  new: true,
+               },
+            );
+         }
+
+         res.json({ success: true, produser });
+      } catch (e) {
+         return next(new ErrorHander(e, 400));
+      }
+   };
+
+
+
+
    // Delete produser
    deleteProduser = async (req, res, next) => {
       try {

@@ -39,6 +39,7 @@ import NewProductUser from "./component/productuser/NewProductUser";
 import ProductUserList from "./component/productuser/ProductUserList";
 import ProduserUserListad from "./component/Admin/ProductUserListad";
 import UpdateProdUser from "./component/productuser/UpdateProductUser";
+import UpdateProduserad from "./component/Admin/UpdateProductUserad";
 
 function App() {
   const {
@@ -240,10 +241,19 @@ function App() {
 
         <Route
           extact
-          path="/produser/:producerId"
+          path="/produser/:produserId"
           element={
             <ProtectedRoute user={isAuthenticated} role={user ? user.role : ""}>
               <UpdateProdUser />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          extact
+          path="/admin/produser/:produserId"
+          element={
+            <ProtectedRoute user={isAuthenticated} role={user ? user.role : ""}>
+              <UpdateProduserad />
             </ProtectedRoute>
           }
         />
@@ -254,6 +264,15 @@ function App() {
           element={
             <ProtectedRoute user={isAuthenticated} role={user ? user.role : ""}>
               <ProductUserList />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          extact
+          path="/admin/produser/list"
+          element={
+            <ProtectedRoute user={isAuthenticated} role={user ? user.role : ""}>
+              <ProduserUserListad />
             </ProtectedRoute>
           }
         />
