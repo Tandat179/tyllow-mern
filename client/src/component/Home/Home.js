@@ -9,9 +9,14 @@ import { Link } from "react-router-dom";
 import { OutlineButton } from "../../component/button/Button";
 import { Banner } from "../banner/Banner.js";
 import "../../component/banner/banner.scss";
+import Category from "./Category";
+import { useDispatch } from "react-redux";
+import { removeQueryFetch } from "../../redux/pageStore";
+import CategoryCate from "./CategoryCate";
 
 // import HeroSlide from "../hero-slide/HeroSlide";
 function Home() {
+  const dispatch = useDispatch()
   const {
     productState: { products },
     getProducts,
@@ -19,14 +24,9 @@ function Home() {
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(async () => {
-      await getProducts();
-      setLoading(false);
-    }, 1000);
-    return () => clearTimeout(timer);
+       getProducts().then(res =>  setLoading(false));
+       dispatch(removeQueryFetch())
   }, []);
-
-  // console.log(products);
 
   return (
     <Fragment>
@@ -47,20 +47,13 @@ function Home() {
       <br></br>
 
       <div className="container" id="container">
-        <div className="section__header mb2">
-          <h1>Hello</h1>
-          <div className="section__header mb2">
-            <Link to="/products">
-              <OutlineButton className="small">View more</OutlineButton>
-            </Link>
-          </div>
-          <br></br>
 
-          <ListMovie />
+      <Category title="phim Hot" isHot={true} filterCustom={{filterCustom : 'CountView' , value : -1}}/>
+      <Category title="phim 2022" filter={{filter : 'year' , value : 2022}}/>
+      <Category title="phim Premium" filter={{filter : 'ispremium' , value : true}}/>
+      <CategoryCate title="Hành động" filter={{filter : 'category' , value : "Hanh Dong"}}/>
 
-          <div className="section__header mb2"></div>
-          <br></br>
-        </div>
+
       </div>
     </Fragment>
   );

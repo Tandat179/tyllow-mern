@@ -15,6 +15,43 @@ class FavoriteController {
          return next(new ErrorHander(e, 400));
       }
    };
+   fetchCountSubscribe = async (req, res, next) => {
+      try {
+         console.log(req.params.id);
+         const countSubscribe = await Favorite.countDocuments({ 'favoriteItems' : {$elemMatch : {product : req.params.id}} });
+         res.json({
+            success: true,
+            countSubscribe,
+         });
+      } catch (e) {
+         return next(new ErrorHander(e, 400));
+      }
+   };
+   subscribe = async (req, res, next) => {
+      try {
+         const newFavorite = req.body
+         const {status} = req.query
+         const product = await Favorite.findOne({user : req.user._id})
+         console.log(product);
+         if(status === 'subscribe'){
+            const news = await Favorite.findOneAndUpdate({ user: req.user._id },{$push : {favoriteItems : newFavorite}})
+            res.json({
+               success: true,
+               news,
+            });
+         }
+          else{
+            const news = await Favorite.findOneAndUpdate({ user: req.user._id },{$pull : {favoriteItems : newFavorite}})
+            res.json({
+               success: false,
+               news,
+            });
+          }
+       
+      } catch (e) {
+         return next(new ErrorHander(e, 400));
+      }
+   };
 }
 
 module.exports = new FavoriteController();

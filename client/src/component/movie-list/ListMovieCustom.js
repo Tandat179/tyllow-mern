@@ -7,16 +7,15 @@ import { Pagination } from "swiper";
 import "@splidejs/react-splide/css";
 import "../Home/movie-card.scss";
 import Button from "../button/Button";
-import { ProductContext } from "../../context/product/ProductContext";
-import Play from "../../assets/play.png";
 import axiosClient from '../../api/axiosClient'
 import { useQuery } from "@tanstack/react-query";
-function ListMovie({filter}) {
+function ListMovieCustom({filterCustome}) {
   const fetchListMoviceFilter = async() => {
-    const res = await axiosClient.get(`/product/filter?${filter.filter}=${filter.value}`)
+    const res = await axiosClient.get(`/view/filterCustome`)
     return res.data
   }
-  const {data,isLoading} = useQuery([filter],fetchListMoviceFilter)
+  const {data,isLoading} = useQuery([filterCustome],fetchListMoviceFilter)
+
 
   return (
     <Splide
@@ -30,17 +29,17 @@ function ListMovie({filter}) {
     >
      {isLoading ? <div>...Loading</div> : data?.products.map((values, index) => 
           <SplideSlide key={v4()} >
-            <Link to={`/product/${values._id}`}>
+            <Link to={`/product/${values.product._id}`}>
               <div
                 className="movie-card"
-                style={{ backgroundImage: `url(${values.thumb_url})` }}
-                // style={{ backgroundImage: `url(${values.images[0].url})` }}
+                style={{ backgroundImage: `url(${values.product.thumb_url})` }}
+                // style={{ backgroundImage: `url(${values.product.images[0].url})` }}
 
               >
                 <Button></Button>
               </div>
               <div className="card-title">
-                <h3>{values.name}</h3>
+                <h3>{values.product.name}</h3>
               </div>
             </Link>
           </SplideSlide>
@@ -48,4 +47,4 @@ function ListMovie({filter}) {
     </Splide>
   );
 }
-export default ListMovie;
+export default ListMovieCustom;

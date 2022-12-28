@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { useState, useContext } from "react";
+import { useContext } from "react";
 // import "./header.css";
 // import logo from "../../../assets/bag-heart.svg";
 import { Link, useLocation } from "react-router-dom";
@@ -17,6 +17,7 @@ import Button from "react-bootstrap/Button";
 // import './header.scss'
 import logo from "../../../assets/tmovie.png";
 import "./header.scss";
+
 
 export const Header = () => {
   const headerNav = [
@@ -51,6 +52,8 @@ export const Header = () => {
       }
     };
     window.addEventListener("scroll", shrinkHeader);
+    
+   
     return () => {
       window.removeEventListener("scroll", shrinkHeader);
     };

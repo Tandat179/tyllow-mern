@@ -3,8 +3,14 @@ const ErrorHander = require('../../utils/errorhander');
 const ApiFeatures = require('../../utils/apiFeatures');
 const cloundinary = require('cloudinary');
 const removeVietnameseTones = require('../../constant/RemoveVietnam');
+const View = require('../model/View');
 
+<<<<<<< HEAD
 // const removeVietnameseTones = require('../../constant/RemoveVietnam');
+=======
+
+
+>>>>>>> edd6be188d77828f9d40e4a5fcacf9bd84579835
 
 class ProductController {
    // Create Producer
@@ -45,8 +51,14 @@ class ProductController {
    // Get All Product
    getAllProduct = async (req, res, next) => {
       try {
+<<<<<<< HEAD
          const resultPerPage = 16;
          console.log(req.query, 'req');
+=======
+         const resultPerPage = req.query.limit;
+         
+         console.log(req.query,"req");
+>>>>>>> edd6be188d77828f9d40e4a5fcacf9bd84579835
          const productCount = await Product.countDocuments();
          const apiFeaturesFilter = new ApiFeatures(Product.find(), req.query)
             .searchByName()
@@ -359,9 +371,15 @@ class ProductController {
 
          const { category } = item;
          const newCategory = removeVietnameseTones(category);
+<<<<<<< HEAD
          item.category = newCategory;
          console.log(newCategory);
          // let doc = await Product.findOneAndUpdate({name}, item);
+=======
+         item.category = newCategory
+     
+         let doc = await Product.findOneAndUpdate({name}, item);
+>>>>>>> edd6be188d77828f9d40e4a5fcacf9bd84579835
 
          res.json({
             success: true,
@@ -372,5 +390,45 @@ class ProductController {
          return next(new ErrorHander(e, 400));
       }
    };
+   getproductByCategory = async (req, res, next) => {
+      try {
+         const { category } = req.query;
+        const products = await Product.find({category : {$regex : category , $options :'i'}})
+        
+         
+         res.json({
+            success: true,
+            products,
+            message: 'Delete complete',
+         });
+      } catch (e) {
+         return next(new ErrorHander(e, 400));
+      }
+   };
+   filterProduct = async (req, res, next) => {
+      try {
+         const keyword = req.query;
+         console.log(keyword,'keyword');
+         // const { category } = req.query;
+         let products
+         if(req.query.category){
+
+             products = await Product.find({category : {$regex : req.query.category , $options :'i'}})
+         }
+         else{
+            
+             products = await Product.find(keyword)
+
+         }
+         res.json({
+            success: true,
+            products,
+            message: 'Delete complete',
+         });
+      } catch (e) {
+         return next(new ErrorHander(e, 400));
+      }
+   };
+
 }
 module.exports = new ProductController();

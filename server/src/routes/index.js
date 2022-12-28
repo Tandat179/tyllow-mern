@@ -4,7 +4,7 @@ const siteOrder = require('./order');
 const siteFavorite = require('./favorite');
 const siteBanner = require('./banner');
 const siteProduser = require('./productuser');
-
+const siteView = require('./view');
 
 
 const crossOrigin = require('../utils/crossOrigin');
@@ -16,7 +16,7 @@ function route(app) {
    app.use('/order', crossOrigin, siteOrder);
    app.use('/banner', crossOrigin, siteBanner);
    app.use('/produser', crossOrigin, siteProduser);
-
+   app.use('/view',crossOrigin,siteView)
 
 
 

@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useCallback } from "react";
 import Pagination from "react-js-pagination";
 
 import { ProductContext } from "../../context/product/ProductContext";
@@ -12,6 +12,8 @@ import "rc-slider/assets/index.css";
 import "./Search.css";
 import ItemListCategory from "./ItemListCategory";
 import ListCategory from "./ListCategory";
+import { removeVietnameseTones } from "../../consts/convertName";
+import { newCategorys } from "../../consts/category";
 
 const { createSliderWithTooltip } = Slider;
 
@@ -19,26 +21,6 @@ const { createSliderWithTooltip } = Slider;
 const Range = createSliderWithTooltip(Slider.Range);
 
 // Category
-const categories = [
-  "Hành Động",
-  "Tình Cảm",
-  "Hài hước",
-  "Cổ Trang",
-  "Tâm lí",
-  "Bí ẩn",
-  "Chiến Tranh",
-  "Thể Thao",
-  "Võ Thuật",
-  "Viên Tưởng",
-  "Phiêu Lưu",
-  "Tài liệu",
-  "Chính Kịch",
-  "Thần Thoại",
-  "Gia Đình",
-  "Học Đường",
-  "SALE",
-  "All",
-];
 
 function Products() {
   const [isLoading, setLoading] = useState(true);
@@ -60,15 +42,14 @@ function Products() {
   } = useContext(ProductContext);
 
   let count = filterCountProducts;
-
-  useEffect(() => {
+  const fetch = useCallback(async () => {
     // Get product about CurrentPage, Price, Category, Rating, Keyword
-    const timer = setTimeout(async () => {
-      await getProducts(currentPage, price, category, ratings, keyword);
-      setLoading(false);
-    }, 100);
-    return () => clearTimeout(timer);
-  }, [currentPage, price, category, ratings, keyword]);
+    await getProducts(currentPage, price, category, ratings, keyword);
+    setLoading(false);
+  },[currentPage, price, category, ratings, keyword])
+  useEffect(() => {
+    fetch()
+  }, [fetch]);
   // Dependencies
 
   const setCurrentPageNo = (e) => {
@@ -113,7 +94,14 @@ function Products() {
           <div>CATEGORIES</div>
 
              
-              <ListCategory setLoading={() => setLoading(true)} category={category} categories={categories} setCategory={(item) => setCategory(item)}/>
+              <ListCategory  category={category} categories={newCategorys} setCategory={(cate) => {
+                  if (cate.value === "All") {
+                    setCategory("");
+                  } else {
+                    category === "" ? setCategory(cate.value) : setCategory(`${category}|${cate.value}`)
+                  }
+                  setLoading(true);
+                }}/>
         
 
 

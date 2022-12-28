@@ -12,10 +12,14 @@ import FavoriteProvider from "./context/favorite/FavoriteProvider";
 import BannerProvider from "./context/banner/BannerProvider";
 // import ProductUserProvider from "./context/productuser/ProductUserProvider";
 import ProduserProvider from "./context/produser/ProduserProvider";
+import { Provider } from 'react-redux'
+import { store } from "./redux/pageStore";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
+
+  <Provider store={store}>
     <ProductProvider>
       <BannerProvider>
         <ProduserProvider>
@@ -33,7 +37,11 @@ root.render(
         </ProduserProvider>
       </BannerProvider>
     </ProductProvider>
-  </React.StrictMode>
+
+    </Provider>,
+
+
+  // </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

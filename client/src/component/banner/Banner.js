@@ -19,12 +19,7 @@ export function Banner({}) {
   const [movieItems, setMovieItems] = useState([]);
 
   useEffect(() => {
-    const timer = setTimeout(async () => {
-      await getBanners();
-
-      setLoading(false);
-    }, 1000);
-    return () => clearTimeout(timer);
+       getBanners().then(res => setLoading(false));
   }, []);
 
   // useEffect(() => {
@@ -45,8 +40,8 @@ export function Banner({}) {
   const renderItem = () => {
     return banners.map((values, index) => {
       return (
-        <>
-          <SplideSlide className="hero-slide">
+        
+          <SplideSlide key={index} className="hero-slide">
             {/* <Link to={`/banner/${values._id}`}> */}
             <div
               className={`hero-slide__item active  `}
@@ -66,7 +61,7 @@ export function Banner({}) {
             </div>
             {/* </Link> */}
           </SplideSlide>
-        </>
+        
       );
     });
   };

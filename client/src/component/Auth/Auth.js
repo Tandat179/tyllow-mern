@@ -10,8 +10,10 @@ import MailOutlineIcon from "../../assets/mail.svg";
 import LockOpenIcon from "../../assets/password.svg";
 import FaceIcon from "../../assets/person-circle.svg";
 import ImageCard from "../../assets/card-image.svg";
+import { useForm } from "react-hook-form";
 
 import "./Auth.css";
+import Register from "./Register";
 
 const Auth = () => {
 
@@ -30,6 +32,19 @@ const Auth = () => {
 
   const [avatarPreview, setAvatarPreview] = useState(ImageCard);
   const [isLoading, setLoading] = useState(false);
+
+  const loadingShow = () => {
+    setLoading(true);
+
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  };
+  const { register, handleSubmit, watch, formState: { errors } } = useForm();
+  const onSubmitLogin = async(data) => {
+    loadingShow();
+    await loginUser(data);
+  };
 
   //Register
   const [formRegister, setFormRegister] = useState({
@@ -71,13 +86,6 @@ const Auth = () => {
     }
   }, [isAuthenticated, message]);
 
-  const loadingShow = () => {
-    setLoading(true);
-
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
-  };
 
   // Get and catch value name from Form Login
   const handleOnChangeLogin = (e) =>
@@ -88,7 +96,7 @@ const Auth = () => {
     loadingShow();
     await loginUser(formLogin);
   };
-
+console.log(errors);
   const registerSubmit = async (e) => {
     e.preventDefault();
     loadingShow();
@@ -133,7 +141,7 @@ const Auth = () => {
           <form
             className="loginForm"
             ref={loginTab}
-            onSubmit={submitLoginHandle}
+            onSubmit={handleSubmit(onSubmitLogin)}
           >
 
             {/* Response message from server */}
@@ -144,75 +152,74 @@ const Auth = () => {
             <div className="loginEmail">
               <img src={MailOutlineIcon} alt="s" className="svgImg" />
               <input
-                type="email"
                 placeholder="Email"
-                required
                 name="email"
-                value={formLogin.email}
-                onChange={handleOnChangeLogin}
+                {...register("email",{ pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i , required : true })}
+                // value={formLogin.email}
+                // onChange={handleOnChangeLogin}
               />
+              
             </div>
-
+            {errors.email && errors.email.type === 'required' && <span style={{alignSelf : 'flex-start',color : 'red' ,fontSize : '12px'}}>Vui lòng nhập email</span>}
+            { errors.email &&  errors.email.type === 'pattern' && <span style={{alignSelf : 'flex-start',color : 'red' ,fontSize : '12px'}}>email không đúng định dạng</span>}
             {/* Password */}
             <div className="loginPassword">
               <img src={LockOpenIcon} alt="s" className="svgImg" />
               <input
                 type="password"
                 placeholder="Password"
-                value={formLogin.password}
-                required
+                // value={formLogin.password}
                 name="password"
-                onChange={handleOnChangeLogin}
+                {...register("password",{ required: true, minLength: 2 ,maxLength : 18 })}
+                // onChange={handleOnChangeLogin}
               />
             </div>
-
+            {errors.password && errors.password.type === 'required' && <span style={{alignSelf : 'flex-start',color : 'red' ,fontSize : '12px'}}>Vui lòng nhập password</span>}
+            {errors.password && errors.password.type === 'minLength' && <span style={{alignSelf : 'flex-start',color : 'red' ,fontSize : '12px'}}>Mật khẩu phải lớn hơn 2 ký tự</span>}
+            {errors.password && errors.password.type === 'maxLength' && <span style={{alignSelf : 'flex-start',color : 'red' ,fontSize : '12px'}}>Mật khẩu phải bé hơn 18 ký tự</span>}
             {/* Forget Password */}
             <Link to="/password/forgot">Forget Password ?</Link>
 
             {/* Button Submit */}
             <input type="submit" value="Login" className="loginBtn" />
           </form>
+          
 
 
-
-          {/* Form Register (SignUp) */}
-          <form
+          {/* <form
             className="signUpForm"
             ref={registerTab}
             encType="multipart/form-data"
-            onSubmit={registerSubmit}
+            onSubmit={handleSubmit(registerSubmit)}
           >
-            {/* Message from Server */}
             <p style={{ color: "red", textAlign: "center" }}>{message}</p>
             <div className="signUpName">
               <img src={FaceIcon} alt="s" className="svgImg" />
 
-              {/* Input Name */}
               <input
                 type="text"
                 placeholder="Name"
                 required
                 name="name"
-                onChange={registerDataChange}
-                value={formRegister.name}
+               {...register("name",{required : true , maxLength : 20  , minLength : 2})}
               />
             </div>
 
 
-            {/* Input Mail */}
-            <div className="signUpEmail">
+            <div className="loginEmail">
               <img src={MailOutlineIcon} alt="s" className="svgImg" />
               <input
-                type="email"
                 placeholder="Email"
-                required
                 name="email"
-                onChange={registerDataChange}
-                value={formRegister.email}
+                {...register("emailRegister",{ pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i , required : true })}
+                // value={formLogin.email}
+                // onChange={handleOnChangeLogin}
               />
+              
             </div>
+            {errors.emailRegister && errors.emailRegister.type === 'required' && <span style={{alignSelf : 'flex-start',color : 'red' ,fontSize : '12px'}}>Vui lòng nhập email</span>}
+            { errors.emailRegister &&  errors.emailRegister.type === 'pattern' && <span style={{alignSelf : 'flex-start',color : 'red' ,fontSize : '12px'}}>email không đúng định dạng</span>}
 
-            {/* Input Password */}
             <div className="signUpPassword">
               <img src={LockOpenIcon} alt="s" className="svgImg" />
               <input
@@ -226,7 +233,6 @@ const Auth = () => {
             </div>
 
 
-            {/* Input Avatar */}
             <div id="registerImage">
               <img alt="Avatar Preview" src={avatarPreview} />
               <input
@@ -237,9 +243,9 @@ const Auth = () => {
               />
             </div>
 
-            {/* Submit */}
             <input type="submit" value="Register" className="signUpBtn" />
-          </form>
+          </form> */}
+          <Register registerUser={registerUser} loadingShow={loadingShow} registerTab={registerTab} message={message} />
         </div>
       </div>
     </>

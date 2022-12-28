@@ -49,8 +49,8 @@ const Sidebar = () => {
               <img src={AccountTreeIcon} alt="s" className="svgImg" />
               <select name="category">
                 <option value="">Choose Category</option>
-                {CATEGORIES.map((cate) => (
-                  <option key={cate} value={cate}>
+                {CATEGORIES.map((cate,i) => (
+                  <option key={i} value={cate}>
                     {cate}
                   </option>
                 ))}

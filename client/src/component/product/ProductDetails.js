@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useCallback } from "react";
 import Carousel from "react-bootstrap/Carousel";
 import { useParams, useNavigate } from "react-router-dom";
 import LoadingModal from "../Loading/loading";
@@ -12,6 +12,13 @@ import Modal from "react-bootstrap/Modal";
 import { AuthContext } from "../../context/auth/AuthContext";
 import "./product-detail.scss";
 import Button from "../button/Button";
+import axiosClient from "../../api/axiosClient";
+
+import CategoryDetails from "../Home/CategoryDetails";
+
+import ListButtonContact from "./ListButtonContact";
+
+
 const ProductDetails = () => {
   const navigate = useNavigate();
   const { addItemsToCart } = useContext(CartContext);
@@ -27,12 +34,20 @@ const ProductDetails = () => {
     getOneProduct,
     createNewReviews,
   } = useContext(ProductContext);
-
+console.log(product);
   const {
     authState: { isAuthenticated },
   } = useContext(AuthContext);
-
   let body;
+  const fetchIncreaseView = useCallback(async() => {
+    const res = await  axiosClient.post(`/view/increaseView/${id}`)
+    },[id])
+
+  const ReviewReverse = () => { // Đảo ngược Reivew
+    return product.reviews.sort(() => -1)
+  }
+
+
 
   // Quantity of Stock
   const increaseQuantity = () => {
@@ -89,13 +104,21 @@ const ProductDetails = () => {
 
   // Await get Someone Item or Product
   useEffect(() => {
-    const timer = setTimeout(async () => {
-      await getOneProduct(id);
-      setLoading(false);
-    }, 1500);
-    return () => clearTimeout(timer);
+    // const timer = setTimeout(async () => {
+       getOneProduct(id).then(res =>  setLoading(false));
+       fetchIncreaseView()
+    // }, 1500);
+    // return () => clearTimeout(timer);
+
   }, [id]);
 
+
+
+  const getCategoryToFetch = (category) => {
+    const newCategory = category.replaceAll(" ","|")
+    return newCategory
+  }
+  getCategoryToFetch("hanh dong tam ly")
   if (isLoading) {
     body = <>{isLoading && <LoadingModal show={isLoading} />}</>;
   } else {
@@ -188,6 +211,7 @@ const ProductDetails = () => {
             border="red"
             width="100%"
             height="515"
+            allowFullScreen={true}
             src={product.link_embed}
             title="YouTube video player"
             allow="accelerometer; autoplay; 
@@ -195,6 +219,7 @@ const ProductDetails = () => {
           gyroscope; picture-in-picture"
           ></iframe>
         </div>
+        <ListButtonContact id={id}/>
         <h3 className="reviewsHeading">REVIEWS</h3>
         <Modal
           aria-labelledby="simple-dialog-title"
@@ -230,16 +255,19 @@ const ProductDetails = () => {
             </Button>
           </Modal.Footer>
         </Modal>
-        {product.reviews && product.reviews[0] ? (
+        {ReviewReverse() && ReviewReverse()[0] ? (
           <div className="reviews">
-            {product.reviews &&
-              product.reviews.map((review) => (
+            {ReviewReverse() &&
+              ReviewReverse().map((review) => (
                 <ReviewCard key={review._id} review={review} />
               ))}
           </div>
         ) : (
           <p className="noReviews">No Reviews Yet</p>
         )}
+       {/* <ListContact /> */}
+     
+        <CategoryDetails filter={{filter : "category" , value : getCategoryToFetch(product.category)}}/>
         {/* <div className="ProductDetails">
           <div>
           

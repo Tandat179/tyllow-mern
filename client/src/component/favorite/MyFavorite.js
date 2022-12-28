@@ -19,7 +19,7 @@ const MyFavorites = () => {
     favoriteState: { favorites },
     getMyFavorites,
   } = useContext(FavoriteContext);
-
+  ;
   const columns = [
     { key: "stt", name: "STT", minWidth: 120, flex: 0.1 },
     {
@@ -27,37 +27,20 @@ const MyFavorites = () => {
       name: "Name",
     },
     {
-      key: "itemsQty",
-      name: "Items Qty",
-      type: "number",
-    },
-
-    {
       key: "image",
       name: "Image",
+      formatter: (image) =>  <img src={image.row.image} alt="sd" />,
       minWidth: 120,
-      flex: 0.1,
+      
+      flex: 1,
     },
   ];
-
-  // console.log(user);
-  // Row
-  const rows = [];
-  let STT = 1;
-
-  favorites &&
-    favorites.forEach((item, index) => {
-      rows.push({
-        itemsQty: item.favoriteItems.length,
-        stt: STT,
-        name: item.favoriteItems[0].name,
-        image: item.favoriteItems[0].image,
-      });
-      // console.log(item.favoriteItems.name);
-
-      STT++;
-    });
-
+    const rows = favorites[0] && favorites[0].favoriteItems.map((item, index) => ({
+        stt: index + 1,
+        name: item.name,
+        image: item.image,
+      }));
+    console.log(rows);
   useEffect(() => {
     getMyFavorites();
   }, [loadUser]);
@@ -66,14 +49,16 @@ const MyFavorites = () => {
     <Fragment>
       <div className="myOrdersPage">
         <h2 id="myOrdersHeading">{user.name}'s Favorites</h2>
-        <DataGrid
+       {rows &&  <DataGrid
           rows={rows}
           columns={columns}
           pageSize={10}
           disableSelectionOnClick
           className="myOrdersTable"
           autoHeight
-        />
+          headerRowHeight={35}
+          rowHeight={200}
+        />}
       </div>
     </Fragment>
   );

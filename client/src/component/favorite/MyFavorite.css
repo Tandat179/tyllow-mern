@@ -3,13 +3,14 @@
   max-width: 100%;
   padding: 0 7vmax;
   box-sizing: border-box;
-  background-color: rgb(235, 235, 235);
+
   padding-top: 100px;
   top: 0;
   left: 0;
   height: 100vh;
   display: flex;
   flex-direction: column;
+  color: black;
 }
 
 .rdg {
@@ -32,7 +33,7 @@
 
 .myOrdersTable div {
   font: 300 1vmax 'Roboto';
-  color: rgba(255, 255, 255, 0.678);
+  color: rgba(0, 0, 0, 0.678);
   border: none;
 }
 

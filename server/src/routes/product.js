@@ -74,6 +74,9 @@ router.get(
    ProductController.getAllReview,
 );
 
+
 router.get('/', ProductController.getAllProduct);
+router.get('/filter', ProductController.filterProduct);
+router.get('/getProductByCategory', ProductController.getproductByCategory);
 router.get('/test', ProductController.test);
 module.exports = router;
