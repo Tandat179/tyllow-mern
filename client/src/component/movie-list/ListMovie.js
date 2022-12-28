@@ -17,6 +17,7 @@ function ListMovie({filter}) {
     return res.data
   }
   const {data,isLoading} = useQuery([filter],fetchListMoviceFilter)
+
   return (
     <Splide
       options={{

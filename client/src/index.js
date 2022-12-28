@@ -18,8 +18,8 @@ import { store } from "./redux/pageStore";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   // <React.StrictMode>
-  <Provider store={store}>
 
+  <Provider store={store}>
     <ProductProvider>
       <BannerProvider>
         <ProduserProvider>
@@ -37,7 +37,10 @@ root.render(
         </ProduserProvider>
       </BannerProvider>
     </ProductProvider>
+
     </Provider>,
+
+
   // </React.StrictMode>
 );
 

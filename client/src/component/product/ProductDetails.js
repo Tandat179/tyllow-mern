@@ -13,9 +13,12 @@ import { AuthContext } from "../../context/auth/AuthContext";
 import "./product-detail.scss";
 import Button from "../button/Button";
 import axiosClient from "../../api/axiosClient";
+
 import CategoryDetails from "../Home/CategoryDetails";
 
 import ListButtonContact from "./ListButtonContact";
+
+
 const ProductDetails = () => {
   const navigate = useNavigate();
   const { addItemsToCart } = useContext(CartContext);
@@ -39,9 +42,13 @@ console.log(product);
   const fetchIncreaseView = useCallback(async() => {
     const res = await  axiosClient.post(`/view/increaseView/${id}`)
     },[id])
+
   const ReviewReverse = () => { // Đảo ngược Reivew
     return product.reviews.sort(() => -1)
   }
+
+
+
   // Quantity of Stock
   const increaseQuantity = () => {
     if (product.Stock <= quantity) return;
@@ -104,6 +111,9 @@ console.log(product);
     // return () => clearTimeout(timer);
 
   }, [id]);
+
+
+
   const getCategoryToFetch = (category) => {
     const newCategory = category.replaceAll(" ","|")
     return newCategory

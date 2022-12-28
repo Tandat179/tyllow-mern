@@ -7,9 +7,13 @@ import ListMovie from '../movie-list/ListMovie';
 import ListMovieCustom from '../movie-list/ListMovieCustom';
 import "./home.css";
 
+
 export default function Category({title,filter,filterCustom,isHot}) {
   const navigate = useNavigate()
   const dispatch = useDispatch()
+
+
+
   return (
     <div className="section__header mb2">
     <h1>{title}</h1>

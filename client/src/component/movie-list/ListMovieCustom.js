@@ -16,6 +16,7 @@ function ListMovieCustom({filterCustome}) {
   }
   const {data,isLoading} = useQuery([filterCustome],fetchListMoviceFilter)
 
+
   return (
     <Splide
       options={{

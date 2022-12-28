@@ -47,7 +47,6 @@ router.post('/increaseLike/:id',async(req,res)=>{
         if(status === 'giam'){
             if(product.CountLike !== 0)
             {
-
                 const Views = await View.findOneAndUpdate({product :id},{CountLike: product.CountLike-1});
                 res.status(200).json(Views);
             }
@@ -88,6 +87,7 @@ router.get('/fetchLike/:id',async(req,res)=>{
 router.get('/filterCustome',async(req,res)=>{
 //    const limit = 20;
     const products = await View.find({}).sort({CountView : -1}).populate('product').limit(20) // sắp xếp view giảm dần
+
     res.status(200).json({products})
 }
 )
