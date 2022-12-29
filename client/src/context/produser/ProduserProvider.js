@@ -53,14 +53,15 @@ function ProduserProvider({ children }) {
   const getOneProduser = async (id) => {
     try {
       const response = await axios.get(
-        // `http://localhost:4000/produser/details/${id}`
-        `http://localhost:4000/produser/${id}`
+        `http://localhost:4000/produser/details/${id}`
+        // `http://localhost:4000/produser/${id}`
       );
 
       if (response.data.success) {
         dispatch(getOneProduserSuccess(response.data.produser));
       }
     } catch (e) {
+      console.log("Ops");
       console.log(e);
     }
   };
@@ -141,6 +142,25 @@ function ProduserProvider({ children }) {
     }
   };
 
+
+
+  const updateProduserad = async (formUpdate, idProduser) => {
+    if (localStorage["auth-token"]) {
+      setAuthToken(localStorage["auth-token"]);
+    }
+    try {
+      const response = await axios.put(
+        `http://localhost:4000/admin/produser/update/${idProduser}`,
+        formUpdate
+      );
+
+      if (response.data.success)
+        dispatch(updateProduserSuccess(response.data.produser));
+    } catch (error) {
+      dispatch(updateProduserFail(error.response.data.message));
+    }
+  };
+
   //Get All produser
   const getAllProdusers = async (keyword = "") => {
     if (localStorage["auth-token"]) {
@@ -162,6 +182,28 @@ function ProduserProvider({ children }) {
       dispatch(getAllProdusersFail(error.response.data.message));
     }
   };
+
+  const getAllProdusersad = async (keyword = "") => {
+    if (localStorage["auth-token"]) {
+      setAuthToken(localStorage["auth-token"]);
+    }
+    // let link = `http://localhost:4000/produser/admin/produsers`;
+
+    let link = `http://localhost:4000/produser/admin/produsers`;
+
+    if (keyword) {
+      link = `http://localhost:4000/produser?name=${keyword}`;
+    }
+    try {
+      const response = await axios.get(link);
+
+      if (response.data.success)
+        dispatch(getAllProdusersSuccess(response.data.produsers));
+    } catch (error) {
+      dispatch(getAllProdusersFail(error.response.data.message));
+    }
+  };
+
 
   // //Get All Reviews
   // const getAllReviews = async (keyword = "") => {
@@ -208,7 +250,9 @@ function ProduserProvider({ children }) {
     produserState,
     getProdusers,
     getOneProduser,
+    getAllProdusersad,
     // createNewReviews,
+    updateProduserad,
     getAllProdusers,
     createProduser,
     deleteProduser,

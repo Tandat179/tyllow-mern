@@ -5,8 +5,12 @@ const cloundinary = require('cloudinary');
 const removeVietnameseTones = require('../../constant/RemoveVietnam');
 const View = require('../model/View');
 
+<<<<<<< HEAD
+// const removeVietnameseTones = require('../../constant/RemoveVietnam');
+=======
 
 
+>>>>>>> edd6be188d77828f9d40e4a5fcacf9bd84579835
 
 class ProductController {
    // Create Producer
@@ -47,9 +51,14 @@ class ProductController {
    // Get All Product
    getAllProduct = async (req, res, next) => {
       try {
+<<<<<<< HEAD
+         const resultPerPage = 16;
+         console.log(req.query, 'req');
+=======
          const resultPerPage = req.query.limit;
          
          console.log(req.query,"req");
+>>>>>>> edd6be188d77828f9d40e4a5fcacf9bd84579835
          const productCount = await Product.countDocuments();
          const apiFeaturesFilter = new ApiFeatures(Product.find(), req.query)
             .searchByName()
@@ -357,16 +366,21 @@ class ProductController {
    test = async (req, res, next) => {
       try {
          const { name } = req.query;
-   
-         const item = await Product.findOne({name})
-        
-         const {category} = item
+
+         const item = await Product.findOne({ name });
+
+         const { category } = item;
          const newCategory = removeVietnameseTones(category);
+<<<<<<< HEAD
+         item.category = newCategory;
+         console.log(newCategory);
+         // let doc = await Product.findOneAndUpdate({name}, item);
+=======
          item.category = newCategory
      
          let doc = await Product.findOneAndUpdate({name}, item);
+>>>>>>> edd6be188d77828f9d40e4a5fcacf9bd84579835
 
-         
          res.json({
             success: true,
             item,
