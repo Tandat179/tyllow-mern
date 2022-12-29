@@ -99,7 +99,7 @@
   transition: all 0.5s;
 }
 .category-link:hover {
-  color: rgb(255, 38, 0);
+  color: rgb(255, 38, 0)!important;
 }
 
 .filterBox > fieldset {
